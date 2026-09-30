@@ -1,0 +1,58 @@
+class PilaContenedores:
+    def __init__(self, limite=5):
+        self.pila = [None] * limite
+        self.limite = limite
+        self.tope = -1
+
+    def esta_vacia(self):
+        return self.tope == -1
+
+    def esta_llena(self):
+        return self.tope == self.limite - 1
+
+    def push(self, contenedor):
+        if self.esta_llena():
+            raise OverflowError("La pila de contenedores está llena")
+        self.tope += 1
+        self.pila[self.tope] = contenedor
+
+    def pop(self):
+        if self.esta_vacia():
+            raise IndexError("No hay contenedores para retirar")
+        contenedor = self.pila[self.tope]
+        self.pila[self.tope] = None
+        self.tope -= 1
+        return contenedor
+
+    def peek(self):
+        if self.esta_vacia():
+            raise IndexError("La pila está vacía")
+
+        return self.pila[self.tope]
+
+    def size(self):
+        return self.tope + 1
+    def __str__(self):
+        return str(self.pila[:self.tope + 1])
+
+def demo_contenedores():
+
+    barco = PilaContenedores(5)
+    contenedores = [
+        "CONT-001",
+        "CONT-002",
+        "CONT-003",
+        "CONT-004",
+        "CONT-005"]
+    print("Cargando contenedores:\n")
+    for contenedor in contenedores:
+        barco.push(contenedor)
+        print("Contenedor cargado:", contenedor)
+        print("Pila:", barco)
+    print("\nContenedor ubicado arriba:")
+    print(barco.peek())
+    print("\nDescargando contenedores:")
+    while not barco.esta_vacia():
+        print("Contenedor retirado:", barco.pop())
+        print("Pila:", barco)
+demo_contenedores()
